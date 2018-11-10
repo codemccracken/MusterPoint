@@ -87,12 +87,11 @@ class AddModelViewController: UIViewController, UINavigationControllerDelegate, 
         let modelNickname = modelNicknameTextField.text
         
         // if image is not blank save it
-        if (modelImage != nil){
-            print("Image is not nil")
+        if (modelImage.image != nil){
+            //print("Image is not nil")
             //create an instance of the FileManager
             let fileManager = FileManager.default
             // set image name
-            
             let imageName = codexName! + modelName! + modelOptions!
             print(imageName)
             //get the image path

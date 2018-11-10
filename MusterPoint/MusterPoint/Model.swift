@@ -11,18 +11,14 @@ import UIKit
 class Model: NSObject, NSCoding {
     
     // Declair variables
-    // Unique Identifier of type uuid
+    
     var model_uuid: String = NSUUID().uuidString
-    // Name of item
     var codexName: String = ""
-    // Line for item stats
     var modelName: String = ""
-    // Line for item Rules
     var modelOptions: String = ""
-    // Item Power Cost
     var modelNickname: String = ""
-    // Item Point Cost
     var modelImageAddress: String = ""
+//    var modelImage = UIImage(named:"")
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(model_uuid, forKey: "model_uuid")
@@ -31,6 +27,7 @@ class Model: NSObject, NSCoding {
         aCoder.encode(modelOptions, forKey: "modelOptions")
         aCoder.encode(modelNickname, forKey: "modelNickname")
         aCoder.encode(modelImageAddress, forKey: "modelImageAddress")
+//        aCoder.encode(modelImage, forKey: "modelImage")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -55,9 +52,12 @@ class Model: NSObject, NSCoding {
         if let archivedModelNickname = aDecoder.decodeObject(forKey: "modelNickname") as? String {
             modelNickname = archivedModelNickname
         }
-        if let archivedModelImageAddress = aDecoder.decodeObject(forKey: "itemPointCost") as? String {
+        if let archivedModelImageAddress = aDecoder.decodeObject(forKey: "modelImageAddress") as? String {
             modelImageAddress = archivedModelImageAddress
         }
+//        if let archivedModelImage = aDecoder.decodeObject(forKey: "modelImage") as? UIImage {
+//            modelImage = archivedModelImage
+//        }
     }
     
     
@@ -70,6 +70,7 @@ class Model: NSObject, NSCoding {
         self.modelOptions = modelOptions
         self.modelNickname = modelNickname
         self.modelImageAddress = modelImageAddress
+//        self.modelImage = modelImage
     }
     
 }
