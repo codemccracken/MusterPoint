@@ -58,7 +58,7 @@ class EditModelViewController: UIViewController, UINavigationControllerDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print(delegate)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
         
         // Populate Text Fields
@@ -71,12 +71,12 @@ class EditModelViewController: UIViewController, UINavigationControllerDelegate,
         let imageName = model.codexName + model.modelName + model.modelOptions
         let imagePath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageName)
         if fileManager.fileExists(atPath: imagePath){
-            print(modelImage.image?.imageOrientation)
             modelImage.image = UIImage(contentsOfFile: imagePath)
         }else{
             print("No Image found")
         }
-        
+        modelImage.isUserInteractionEnabled = true
+        modelImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped)))
     }
     
     // MARK: Actions
@@ -128,6 +128,25 @@ class EditModelViewController: UIViewController, UINavigationControllerDelegate,
         }
         self.dismiss(animated: true, completion: nil)
     }
-    
-
+    // MARK: -
+    // MARK: Expand Image if tapped
+    @objc func imageTapped(gesture: UIGestureRecognizer) {
+        //print("The image was tapped")
+        let imageView = gesture.view as! UIImageView
+        let newImageView = UIImageView(image: imageView.image)
+        newImageView.frame = UIScreen.main.bounds
+        newImageView.backgroundColor = .black
+        newImageView.contentMode = .scaleAspectFit
+        newImageView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissFullscreenImage))
+        newImageView.addGestureRecognizer(tap)
+        self.view.addSubview(newImageView)
+        self.navigationController?.isNavigationBarHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    @objc func dismissFullscreenImage(sender: UITapGestureRecognizer) {
+        self.navigationController?.isNavigationBarHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        sender.view?.removeFromSuperview()
+    }
 }

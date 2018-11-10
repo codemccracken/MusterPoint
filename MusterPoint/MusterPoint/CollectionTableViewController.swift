@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CollectionTableViewController: UITableViewController, AddModelViewControllerDelegate {
+class CollectionTableViewController: UITableViewController, AddModelViewControllerDelegate, EditModelViewControllerDelegate {
 
     var models = [Model]()
     let CellIdentifier = "Cell Identifier"
@@ -59,6 +59,14 @@ class CollectionTableViewController: UITableViewController, AddModelViewControll
         let model = models[indexPath.row]
         // Configure Table View Cell
         cell.textLabel?.text = model.modelName
+        let fileManager = FileManager.default
+        let imageName = model.codexName + model.modelName + model.modelOptions
+        let imagePath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageName)
+        if fileManager.fileExists(atPath: imagePath){
+            cell.imageView?.image = UIImage(contentsOfFile: imagePath)
+        }else{
+            print("No Image found")
+        }
         return cell
     }
     
@@ -147,7 +155,7 @@ class CollectionTableViewController: UITableViewController, AddModelViewControll
         tableView.setEditing(!tableView.isEditing, animated: true)
     }
     
-    // MARK: AddModelViewController Delegate Methods
+    // MARK: - AddModelViewController Delegate Methods
     func controller(controller: AddModelViewController, didSaveModelWithCodex codexName: String, andModelName modelName: String, andModelOptions modelOptions: String, andModelNickname modelNickname: String, andModelImageAddress modelImageAddress: String) {
         
         //Create Model
@@ -165,7 +173,7 @@ class CollectionTableViewController: UITableViewController, AddModelViewControll
         saveModels()
     }
     
-    // MARK: EditModelViewController Delegate Methods
+    // MARK: - EditModelViewController Delegate Methods
     func controller(controller: EditModelViewController, didUpdateModel model: Model ) {
         // Fetch Index for Model
         if let index = models.index(of: model) {
@@ -180,18 +188,18 @@ class CollectionTableViewController: UITableViewController, AddModelViewControll
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddModelViewController" {
-//            print("AddModel Segue")
             if let navigationController = segue.destination as? UINavigationController,
                 let addModelViewController = navigationController.viewControllers.first as? AddModelViewController {
                 addModelViewController.delegate = (self as AddModelViewControllerDelegate)
             }
         } else if segue.identifier == "EditModelViewController" {
-            if let editModelViewController = segue.destination as? EditModelViewController, let model = selection {
-                editModelViewController.delegate = self as? EditModelViewControllerDelegate
-                editModelViewController.model = model
-            } else {
-                print("Something went wrong")
-            }
+            //print("EditItem Segue")
+            let editModelViewController = segue.destination as? EditModelViewController
+            let model = selection
+            editModelViewController?.delegate = self as! EditModelViewControllerDelegate
+            editModelViewController?.model = model
         }
+        
+        
     }
 }
