@@ -54,16 +54,24 @@ class CollectionTableViewController: UITableViewController, AddModelViewControll
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Dequeue reusable Cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "modelCell", for: indexPath) as! modelCellTableViewCell
         // Fetch Item
         let model = models[indexPath.row]
         // Configure Table View Cell
-        cell.textLabel?.text = model.modelName
+        cell.modelNickname?.text = model.modelNickname
+        cell.modelNickname.textColor = UIColor(red:0.24, green:0.31, blue:0.35, alpha:1.0)
+        cell.modelName?.text = model.modelName
+        cell.codexName?.text = model.codexName
+        cell.modelOption1?.text = model.modelOption1
+        cell.modelOption2?.text = model.modelOption2
+        cell.modelOption3?.text = model.modelOption3
+        cell.modelOption4?.text = model.modelOption4
         let fileManager = FileManager.default
-        let imageName = model.codexName + model.modelName + model.modelOptions
+        let imageName = model.codexName + model.modelName + model.modelOption1
         let imagePath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageName)
         if fileManager.fileExists(atPath: imagePath){
-            cell.imageView?.image = UIImage(contentsOfFile: imagePath)
+            cell.modelImage.image = UIImage(contentsOfFile: imagePath)
+            
         }else{
             print("No Image found")
         }
@@ -156,10 +164,10 @@ class CollectionTableViewController: UITableViewController, AddModelViewControll
     }
     
     // MARK: - AddModelViewController Delegate Methods
-    func controller(controller: AddModelViewController, didSaveModelWithCodex codexName: String, andModelName modelName: String, andModelOptions modelOptions: String, andModelNickname modelNickname: String, andModelImageAddress modelImageAddress: String) {
+    func controller(controller: AddModelViewController, didSaveModelWithCodex codexName: String, andModelName modelName: String, andModelOption1 modelOption1: String, andModelOption2 modelOption2: String, andModelOption3 modelOption3: String, andModelOption4 modelOption4: String, andModelNickname modelNickname: String, andModelImageAddress modelImageAddress: String) {
         
         //Create Model
-        let model = Model(codexName: codexName, modelName: modelName, modelOptions: modelOptions, modelNickname: modelNickname, modelImageAddress: modelImageAddress)
+        let model = Model(codexName: codexName, modelName: modelName, modelOption1: modelOption1, modelOption2: modelOption2, modelOption3: modelOption3, modelOption4: modelOption4, modelNickname: modelNickname, modelImageAddress: modelImageAddress)
         
         // add Item to Items
         models.append(model)
@@ -196,7 +204,7 @@ class CollectionTableViewController: UITableViewController, AddModelViewControll
             //print("EditItem Segue")
             let editModelViewController = segue.destination as? EditModelViewController
             let model = selection
-            editModelViewController?.delegate = self as! EditModelViewControllerDelegate
+            editModelViewController?.delegate = self as EditModelViewControllerDelegate
             editModelViewController?.model = model
         }
         
