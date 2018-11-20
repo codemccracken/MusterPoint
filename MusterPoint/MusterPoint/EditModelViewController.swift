@@ -17,7 +17,10 @@ class EditModelViewController: UIViewController, UINavigationControllerDelegate,
 
     @IBOutlet var codexNameTextField: UITextField!
     @IBOutlet var modelNameTextField: UITextField!
-    @IBOutlet var modelOptionsTextField: UITextField!
+    @IBOutlet var modelOption1TextField: UITextField!
+    @IBOutlet var modelOption2TextField: UITextField!
+    @IBOutlet var modelOption3TextField: UITextField!
+    @IBOutlet var modelOption4TextField: UITextField!
     @IBOutlet var modelNicknameTextField: UITextField!
     @IBOutlet var modelImage: UIImageView!
     
@@ -58,17 +61,20 @@ class EditModelViewController: UIViewController, UINavigationControllerDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(delegate)
+        //print(delegate)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
         
         // Populate Text Fields
         codexNameTextField.text = model.codexName
         modelNameTextField.text = model.modelName
-        modelOptionsTextField.text = model.modelOptions
+        modelOption1TextField.text = model.modelOption1
+        modelOption2TextField.text = model.modelOption2
+        modelOption3TextField.text = model.modelOption3
+        modelOption4TextField.text = model.modelOption4
         modelNicknameTextField.text = model.modelNickname
         
         let fileManager = FileManager.default
-        let imageName = model.codexName + model.modelName + model.modelOptions
+        let imageName = model.codexName + model.modelName + model.modelOption1
         let imagePath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageName)
         if fileManager.fileExists(atPath: imagePath){
             modelImage.image = UIImage(contentsOfFile: imagePath)
@@ -77,16 +83,22 @@ class EditModelViewController: UIViewController, UINavigationControllerDelegate,
         }
         modelImage.isUserInteractionEnabled = true
         modelImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageTapped)))
+        
+        modelImage.layer.borderWidth = 2
+        modelImage.layer.borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0).cgColor
     }
     
     // MARK: Actions
     @objc func save(sender: UIBarButtonItem) {
-        if let codexName = codexNameTextField.text, let modelName = modelNameTextField.text, let modelOptions = modelOptionsTextField.text, let modelNickname = modelNicknameTextField.text {
+        if let codexName = codexNameTextField.text, let modelName = modelNameTextField.text, let modelOption1 = modelOption1TextField.text, let modelOption2 = modelOption2TextField.text, let modelOption3 = modelOption3TextField.text, let modelOption4 = modelOption4TextField.text, let modelNickname = modelNicknameTextField.text {
             
             // Update model
             model.codexName = codexName
             model.modelName = modelName
-            model.modelOptions = modelOptions
+            model.modelOption1 = modelOption1
+            model.modelOption2 = modelOption2
+            model.modelOption3 = modelOption3
+            model.modelOption4 = modelOption4
             model.modelNickname = modelNickname
             
             // if image is not blank save it
@@ -96,20 +108,20 @@ class EditModelViewController: UIViewController, UINavigationControllerDelegate,
                 let fileManager = FileManager.default
                 // set image name
                 
-                let imageName = model.codexName + model.modelName + model.modelOptions
+                let imageName = model.codexName + model.modelName + model.modelOption1
                 //print(imageName)
                 //get the image path
                 let imagePath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageName)
                 //get the image we took with camera
                 let image = modelImage.image!
                 //get the PNG data for this image
-                let data = image.pngData()
+                let data = image.jpegData(compressionQuality: 1.0)
                 //store it in the document directory
                 fileManager.createFile(atPath: imagePath as String, contents: data, attributes: nil)
-                let modelImageAddress = imagePath
-                print(modelImageAddress)
+                //let modelImageAddress = imagePath
+                
             } else {
-                let modelImageAddress = ""
+                //let modelImageAddress = ""
             }
             
             

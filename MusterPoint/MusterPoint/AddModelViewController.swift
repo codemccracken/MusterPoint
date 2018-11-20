@@ -7,7 +7,7 @@
 //
 
 protocol AddModelViewControllerDelegate {
-    func controller(controller: AddModelViewController, didSaveModelWithCodex codexName: String, andModelName modelName: String, andModelOptions modelOptions: String, andModelNickname modelNickname: String, andModelImageAddress modelImageAddress: String)
+    func controller(controller: AddModelViewController, didSaveModelWithCodex codexName: String, andModelName modelName: String, andModelOption1 modelOption1: String, andModelOption2 modelOption2: String, andModelOption3 modelOption3: String, andModelOption4 modelOption4: String, andModelNickname modelNickname: String, andModelImageAddress modelImageAddress: String)
 }
 
 import UIKit
@@ -17,7 +17,10 @@ class AddModelViewController: UIViewController, UINavigationControllerDelegate, 
 
     @IBOutlet var codexNameTextField: UITextField!
     @IBOutlet var modelNameTextField: UITextField!
-    @IBOutlet var modelOptionsTextField: UITextField!
+    @IBOutlet var modelOption1TextField: UITextField!
+    @IBOutlet var modelOption2TextField: UITextField!
+    @IBOutlet var modelOption3TextField: UITextField!
+    @IBOutlet var modelOption4TextField: UITextField!
     @IBOutlet var modelNicknameTextField: UITextField!
     @IBOutlet var modelImage: UIImageView!
     
@@ -45,8 +48,17 @@ class AddModelViewController: UIViewController, UINavigationControllerDelegate, 
             self.newPic = false
         }
         
+        // check to see if the user is using an iPad
+        
+        
+        
         myAlert.addAction(cameraAction)
         myAlert.addAction(cameraRollAction)
+        if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad {
+            myAlert.popoverPresentationController?.sourceView = self.view
+            myAlert.popoverPresentationController?.sourceRect = sender.bounds;
+            myAlert.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection.up;
+        }
         self.present(myAlert, animated: true)
     }
     
@@ -83,7 +95,10 @@ class AddModelViewController: UIViewController, UINavigationControllerDelegate, 
     @IBAction func save(sender: UIBarButtonItem) {
         let codexName = codexNameTextField.text
         let modelName = modelNameTextField.text
-        let modelOptions = modelOptionsTextField.text
+        let modelOption1 = modelOption1TextField.text
+        let modelOption2 = modelOption2TextField.text
+        let modelOption3 = modelOption3TextField.text
+        let modelOption4 = modelOption4TextField.text
         let modelNickname = modelNicknameTextField.text
         
         // if image is not blank save it
@@ -92,20 +107,21 @@ class AddModelViewController: UIViewController, UINavigationControllerDelegate, 
             //create an instance of the FileManager
             let fileManager = FileManager.default
             // set image name
-            let imageName = codexName! + modelName! + modelOptions!
+            let imageName = codexName! + modelName! + modelOption1!
             print(imageName)
             //get the image path
             let imagePath = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent(imageName)
             //get the image we took with camera
             let image = modelImage.image!
             //get the PNG data for this image
-            let data = image.pngData()
+            let data = image.jpegData(compressionQuality: 1.0)
             //store it in the document directory
             fileManager.createFile(atPath: imagePath as String, contents: data, attributes: nil)
             let modelImageAddress = imagePath
             print(modelImageAddress)
         } else {
             let modelImageAddress = ""
+            print(modelImageAddress)
         }
         
         
@@ -114,7 +130,7 @@ class AddModelViewController: UIViewController, UINavigationControllerDelegate, 
         if (codexName != nil), (modelName != nil) {
             // Notiy Delegate
             //print("Pre-Delegate message")
-            delegate?.controller(controller: self, didSaveModelWithCodex: codexName!, andModelName: modelName!, andModelOptions: modelOptions!, andModelNickname: modelNickname!, andModelImageAddress: modelImageAddress)
+            delegate?.controller(controller: self, didSaveModelWithCodex: codexName!, andModelName: modelName!, andModelOption1: modelOption1!, andModelOption2: modelOption2!, andModelOption3: modelOption3!, andModelOption4: modelOption4!, andModelNickname: modelNickname!, andModelImageAddress: modelImageAddress)
             
             
             dismiss(animated: true, completion: nil)
