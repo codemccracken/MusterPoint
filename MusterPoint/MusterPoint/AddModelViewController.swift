@@ -93,6 +93,8 @@ class AddModelViewController: UIViewController, UINavigationControllerDelegate, 
     }
     
     @IBAction func save(sender: UIBarButtonItem) {
+        // add something to strip off blank spaces at the end of text fields
+        
         let codexName = codexNameTextField.text
         let modelName = modelNameTextField.text
         let modelOption1 = modelOption1TextField.text

@@ -21,7 +21,7 @@ class Model: NSObject, NSCoding {
     var modelOption4: String = ""
     var modelNickname: String = ""
     var modelImageAddress: String = ""
-//    var modelImage = UIImage(named:"")
+
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(model_uuid, forKey: "model_uuid")
@@ -33,7 +33,7 @@ class Model: NSObject, NSCoding {
         aCoder.encode(modelOption4, forKey: "modelOption4")
         aCoder.encode(modelNickname, forKey: "modelNickname")
         aCoder.encode(modelImageAddress, forKey: "modelImageAddress")
-//        aCoder.encode(modelImage, forKey: "modelImage")
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -69,9 +69,7 @@ class Model: NSObject, NSCoding {
         if let archivedModelImageAddress = aDecoder.decodeObject(forKey: "modelImageAddress") as? String {
             modelImageAddress = archivedModelImageAddress
         }
-//        if let archivedModelImage = aDecoder.decodeObject(forKey: "modelImage") as? UIImage {
-//            modelImage = archivedModelImage
-//        }
+
     }
     
     
@@ -79,6 +77,7 @@ class Model: NSObject, NSCoding {
     init(codexName: String, modelName: String, modelOption1: String, modelOption2: String, modelOption3: String, modelOption4: String, modelNickname: String, modelImageAddress: String) {
         super.init()
         
+        //self.model_uuid = model_uuid
         self.codexName = codexName
         self.modelName = modelName
         self.modelOption1 = modelOption1
@@ -87,7 +86,7 @@ class Model: NSObject, NSCoding {
         self.modelOption4 = modelOption4
         self.modelNickname = modelNickname
         self.modelImageAddress = modelImageAddress
-//        self.modelImage = modelImage
+
     }
     
 }
