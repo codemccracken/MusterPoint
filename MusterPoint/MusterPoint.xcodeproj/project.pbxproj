@@ -16,6 +16,7 @@
 		71A3E908218E6D5E007234E9 /* AddModelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A3E907218E6D5E007234E9 /* AddModelViewController.swift */; };
 		71A3E90A218E8B8C007234E9 /* EditModelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A3E909218E8B8C007234E9 /* EditModelViewController.swift */; };
 		71C9A7CF21973A31007825C2 /* modelCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71C9A7CE21973A31007825C2 /* modelCellTableViewCell.swift */; };
+		71FF27FF21AB542B00E5609E /* SortedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FF27FE21AB542B00E5609E /* SortedModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		71A3E907218E6D5E007234E9 /* AddModelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddModelViewController.swift; sourceTree = "<group>"; };
 		71A3E909218E8B8C007234E9 /* EditModelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModelViewController.swift; sourceTree = "<group>"; };
 		71C9A7CE21973A31007825C2 /* modelCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = modelCellTableViewCell.swift; sourceTree = "<group>"; };
+		71FF27FE21AB542B00E5609E /* SortedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortedModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				71C9A7CE21973A31007825C2 /* modelCellTableViewCell.swift */,
 				71A3E8F8218E5DDE007234E9 /* Assets.xcassets */,
 				71A3E905218E5EF8007234E9 /* Model.swift */,
+				71FF27FE21AB542B00E5609E /* SortedModel.swift */,
 				71A3E8FA218E5DDE007234E9 /* LaunchScreen.storyboard */,
 				71A3E8FD218E5DDE007234E9 /* Info.plist */,
 			);
@@ -153,6 +156,7 @@
 				71C9A7CF21973A31007825C2 /* modelCellTableViewCell.swift in Sources */,
 				71A3E8F2218E5DDD007234E9 /* AppDelegate.swift in Sources */,
 				71A3E904218E5E3D007234E9 /* CollectionTableViewController.swift in Sources */,
+				71FF27FF21AB542B00E5609E /* SortedModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
