@@ -15,6 +15,19 @@ import MobileCoreServices
 
 class AddModelViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
+    //MARK: viewDidLoad
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        modelImage.layer.borderWidth = 2
+        modelImage.layer.borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0).cgColor
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
+    }
+    
+    //MARK: Outputs
     @IBOutlet var codexNameTextField: UITextField!
     @IBOutlet var modelNameTextField: UITextField!
     @IBOutlet var modelOption1TextField: UITextField!
@@ -26,6 +39,8 @@ class AddModelViewController: UIViewController, UINavigationControllerDelegate, 
     
     var newPic: Bool? = false
     
+    
+    //MARK: Actions
     @IBAction func importImage(sender: AnyObject){
 
         let myAlert = UIAlertController(title: "Select Image From", message: "", preferredStyle: .actionSheet)
@@ -73,12 +88,7 @@ class AddModelViewController: UIViewController, UINavigationControllerDelegate, 
     var delegate: AddModelViewControllerDelegate?
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        modelImage.layer.borderWidth = 2
-        modelImage.layer.borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0).cgColor
-    }
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
@@ -140,7 +150,56 @@ class AddModelViewController: UIViewController, UINavigationControllerDelegate, 
     }
     
     
-    
+    // MARK: Animated Keyboard
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            print("Show")
+            
+            // Check to see if the information for the size of the keyboard exists
+            guard let userInfo = notification.userInfo
+                else {
+                    return
+                }
+            
+            // get the size of the keyboard
+            guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
+                else {
+                    return
+                }
+            
+            // move the frame by the size of the keyboard
+            let keyboardFrame = keyboardSize.cgRectValue
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardFrame.height
+            }
+        }
+    }
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            print("Hide")
+            
+            // Check to see if the information for the size of the keyboard exists
+            guard let userInfo = notification.userInfo
+                else {
+                    return
+                    
+            }
+            
+            // get the size of the keyboard
+            guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
+                else {
+                    return
+                    
+            }
+            
+            // move the frame by the size of the keyboard
+            let keyboardFrame = keyboardSize.cgRectValue
+            if self.view.frame.origin.y != 0 {
+                self.view.frame.origin.y += keyboardFrame.height
+            }
+            
+        }
+    }
     
     
     
