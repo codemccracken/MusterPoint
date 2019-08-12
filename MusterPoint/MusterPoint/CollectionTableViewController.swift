@@ -25,15 +25,18 @@ class CollectionTableViewController: UITableViewController, AddModelViewControll
         super.viewDidLoad()
         
         title = "Collection"
+        self.tableView.backgroundColor = UIColor.black
         
         // Register Class
         tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: CellIdentifier)
         
         // Create Add Button
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addModel))
+        navigationItem.leftBarButtonItem?.tintColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:1.0)
         
         // Create Edit Button
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editModel))
+        navigationItem.rightBarButtonItem?.tintColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:1.0)
         
         
     }
@@ -60,7 +63,7 @@ class CollectionTableViewController: UITableViewController, AddModelViewControll
         let label = UILabel()
         label.text = sortedModels[section].codexName
         label.textAlignment = .center
-        label.backgroundColor = UIColor.lightGray
+        label.backgroundColor = UIColor(red:0.83, green:0.83, blue:0.83, alpha:1.0)
         return label
     }
     
@@ -92,7 +95,7 @@ class CollectionTableViewController: UITableViewController, AddModelViewControll
         
         // Configure Table View Cell
         cell.modelNickname?.text = model.models[indexPath.row].modelNickname
-        cell.modelNickname.textColor = UIColor(red:0.24, green:0.31, blue:0.35, alpha:1.0)
+        //cell.modelNickname.textColor = UIColor(red:0.24, green:0.31, blue:0.35, alpha:1.0)
         cell.modelName?.text = model.models[indexPath.row].modelName
         cell.codexName?.text = model.models[indexPath.row].codexName
         cell.modelOption1?.text = model.models[indexPath.row].modelOption1
