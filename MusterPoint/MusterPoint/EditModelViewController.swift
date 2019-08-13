@@ -20,7 +20,7 @@ class EditModelViewController: UIViewController, UINavigationControllerDelegate,
         super.viewDidLoad()
         //print(delegate)
         
-        title = "Edit A Model"
+        title = "Edit"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
